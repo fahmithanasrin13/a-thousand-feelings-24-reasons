@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8e7e7">
+<title>ஆயிரம் உணர்வுகள்… 24 காரணங்கள்!</title>
+<style>
+:root{--cream:#fff8ef;--pink:#f5d9dc;--rose:#b86b79;--wine:#6f293e;--gold:#c89b68;--ink:#542d39}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:Georgia,"Noto Serif Tamil",serif;background:radial-gradient(circle at 15% 10%,#fff 0,transparent 35%),linear-gradient(135deg,#fff7ee,#f7e0e2 55%,#f1d2d8);min-height:100vh}
+.hero{text-align:center;padding:58px 18px 30px;position:relative;overflow:hidden}
+.hero:before,.hero:after{content:"✿";position:absolute;color:#d7a2a8;font-size:52px;opacity:.55}
+.hero:before{left:7%;top:28px}.hero:after{right:8%;bottom:15px}
+.kicker{letter-spacing:.12em;color:#a66b73;font-size:12px}
+h1{font-size:clamp(30px,6vw,54px);line-height:1.35;margin:12px auto;color:var(--wine);font-weight:600}
+.subtitle{max-width:620px;margin:0 auto;color:#81515c;line-height:1.9;font-size:16px}
+.progress-wrap{max-width:520px;margin:25px auto 0;padding:0 18px}
+.progress-label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+.track{height:8px;background:#ead0d1;border-radius:20px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#bd7882,#d5ad7d);transition:width .25s}
+main{max-width:1100px;margin:auto;padding:12px 18px 70px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr));gap:24px}
+.polaroid{background:#fffdf9;padding:12px 12px 17px;border-radius:5px;box-shadow:0 9px 25px #713b441c;transform:rotate(var(--tilt,0deg));transition:transform .2s,box-shadow .2s;position:relative}
+.polaroid:hover{transform:translateY(-4px) rotate(0);box-shadow:0 14px 30px #713b4428}
+.photo{position:relative;overflow:hidden;background:#f3dadd;aspect-ratio:1/1.16}
+.photo img{width:100%;height:100%;display:block;object-fit:cover}
+.scratch{position:absolute;inset:0 0 36% 0;touch-action:none;cursor:crosshair}
+.scratch canvas{width:100%;height:100%;display:block;touch-action:none}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding:11px 3px 0;gap:8px}
+.card-num{font-size:12px;color:#a8797e;letter-spacing:.08em}
+.card-hint{font-size:12px;color:#98616b}
+.card-done{font-size:12px;color:#8b5962;display:none}
+.polaroid.revealed .card-hint{display:none}
+.polaroid.revealed .card-done{display:inline}
+.final{display:none;text-align:center;margin:48px auto 0;max-width:720px;padding:32px 22px;background:#fffaf4e8;border:1px solid #e6c9bd;box-shadow:0 12px 35px #713b4415;border-radius:12px}
+.final.show{display:block;animation:appear .8s ease}
+.final h2{color:var(--wine);font-size:clamp(24px,5vw,36px);margin:0 0 18px}
+.final p{line-height:2.1;white-space:pre-line;font-size:17px}
+.heart{font-size:28px;color:#b86b79}
+@keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+footer{text-align:center;padding:0 16px 35px;color:#a06e76;font-size:12px}
+@media(max-width:520px){.hero{padding-top:42px}.grid{gap:17px}.polaroid{padding:9px 9px 13px}.card-foot{padding-top:8px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="kicker">உனக்காக… என் இதயத்திலிருந்து</div>
+  <h1>ஆயிரம் உணர்வுகள்…<br>24 காரணங்கள்!</h1>
+  <p class="subtitle">உன்னை நேசிக்க ஆயிரம் காரணங்கள் இருந்தாலும்,<br>அவற்றில் இருபத்து நான்கை மட்டும் கவிதையாக்கியிருக்கிறேன்…</p>
+  <div class="progress-wrap">
+    <div class="progress-label"><span>கண்டுபிடித்த காரணங்கள்</span><span id="count">0 / 24</span></div>
+    <div class="track"><div class="fill" id="progress"></div></div>
+  </div>
+</header>
+<main>
+  <section class="grid" id="cards" aria-label="24 காதல் அட்டைகள்"></section>
+  <section class="final" id="finalLetter">
+    <div class="heart">♡</div>
+    <h2>இன்னும் முடிவடையாத காதல்…</h2>
+    <p>இருபத்து நான்கு காரணங்கள் எழுதிவிட்டேன்…
+ஆனால் உன்னை நேசிப்பதற்கான காரணங்கள் மட்டும் இன்னும் முடிவடையவில்லை.
+
+ஏனெனில், ஒவ்வொரு நாளும் உன்னிடம் புதிதாகக் காதலிக்க ஏதோ ஒன்றைக் கண்டுகொண்டே இருக்கிறேன்.</p>
+    <div class="heart">♡</div>
+  </section>
+</main>
+<footer>என்றென்றும் உனக்காக… ♡</footer>
+<script>
+const TOTAL=24, revealed=new Set();
+const grid=document.getElementById('cards');
+for(let i=1;i<=TOTAL;i++){
+  const n=String(i).padStart(2,'0');
+  const card=document.createElement('article');
+  card.className='polaroid';
+  card.style.setProperty('--tilt',`${((i%5)-2)*0.55}deg`);
+  card.innerHTML=`<div class="photo"><img src="images/${n}.jpg" alt="காதல் நினைவு ${i}" loading="${i>4?'lazy':'eager'}"><div class="scratch"><canvas aria-label="கவிதையை வெளிப்படுத்த கீறவும்"></canvas></div></div><div class="card-foot"><span class="card-num">நினைவு ${n}</span><span class="card-hint">♡ இங்கே மெதுவாகக் கீறு</span><span class="card-done">♡ வெளிப்பட்டது</span></div>`;
+  grid.appendChild(card);
+  setupScratch(card.querySelector('canvas'),card,i);
+}
+function updateProgress(){
+  document.getElementById('count').textContent=`${revealed.size} / ${TOTAL}`;
+  document.getElementById('progress').style.width=(revealed.size/TOTAL*100)+'%';
+  if(revealed.size===TOTAL) document.getElementById('finalLetter').classList.add('show');
+}
+function setupScratch(canvas,card,index){
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  const wrap=canvas.parentElement;
+  let drawing=false,checked=0,cleared=false;
+  function resize(){
+    const r=wrap.getBoundingClientRect(), dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(r.width*dpr);canvas.height=Math.round(r.height*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const w=r.width,h=r.height;
+    const g=ctx.createLinearGradient(0,0,w,h);
+    g.addColorStop(0,'#d9b5a4');g.addColorStop(.45,'#f0d9c9');g.addColorStop(1,'#c99a83');
+    ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+    ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=1;
+    for(let x=-h;x<w;x+=13){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+h,h);ctx.stroke()}
+    ctx.fillStyle='#754b50';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.font='600 15px Georgia, serif';ctx.fillText('♡  கீறி திறக்கவும்  ♡',w/2,h/2-8);
+    ctx.font='12px Georgia, serif';ctx.fillText('உனக்கான கவிதை…',w/2,h/2+14);
+    cleared=false;checked=0;
+  }
+  function point(e){const r=canvas.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+  function erase(e){
+    const p=point(e);ctx.globalCompositeOperation='destination-out';
+    ctx.beginPath();ctx.arc(p.x,p.y,22,0,Math.PI*2);ctx.fill();ctx.globalCompositeOperation='source-over';
+    checked++;
+    if(checked%8===0) testProgress();
+  }
+  function testProgress(){
+    if(cleared)return;
+    const data=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let transparent=0,total=0;
+    for(let i=3;i<data.length;i+=4){total++;if(data[i]<40)transparent++}
+    if(transparent/total>.43) revealAll();
+  }
+  function revealAll(){
+    if(cleared)return;cleared=true;ctx.clearRect(0,0,canvas.width,canvas.height);
+    card.classList.add('revealed');revealed.add(index);updateProgress();
+  }
+  canvas.addEventListener('pointerdown',e=>{if(cleared)return;drawing=true;canvas.setPointerCapture(e.pointerId);erase(e)});
+  canvas.addEventListener('pointermove',e=>{if(drawing&&!cleared)erase(e)});
+  ['pointerup','pointercancel','lostpointercapture'].forEach(ev=>canvas.addEventListener(ev,()=>drawing=false));
+  const observer=new ResizeObserver(()=>{if(!cleared)resize()});observer.observe(wrap);resize();
+}
+</script>
+</body>
+</html>
